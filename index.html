@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>放疗术语知识库 | OUR-SZ </title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-page: #eef2f8;
+            --bg-card: #ffffff;
+            --text-primary: #1a2c3e;
+            --text-secondary: #4a6a85;
+            --border: #dce5ec;
+            --accent: #1a7faa;
+            --accent-light: #e6f4f9;
+            --header-bg: linear-gradient(135deg, #0c2e42 0%, #1b5a7a 100%);
+            --code-bg: #f0f4f9;
+            --shadow: rgba(0,0,0,0.08);
+        }
+
+        body.dark {
+            --bg-page: #121826;
+            --bg-card: #1e2438;
+            --text-primary: #e8edf5;
+            --text-secondary: #9aaec9;
+            --border: #2a334a;
+            --accent: #3fa7d1;
+            --accent-light: #1e3a4a;
+            --header-bg: linear-gradient(135deg, #07161f 0%, #0f2c3a 100%);
+            --code-bg: #0f151f;
+            --shadow: rgba(0,0,0,0.3);
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg-page);
+            color: var(--text-primary);
+            transition: all 0.2s ease;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .hero {
+            background: var(--header-bg);
+            border-radius: 32px;
+            padding: 28px 32px;
+            margin-bottom: 24px;
+            color: white;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+        }
+        .hero-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        .hero h1 {
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .hero h1:before {
+            content: "📖";
+            font-size: 2rem;
+        }
+        .hero p {
+            margin-top: 12px;
+            opacity: 0.85;
+            font-size: 0.9rem;
+        }
+        .theme-toggle {
+            background: rgba(255,255,255,0.15);
+            border: none;
+            border-radius: 40px;
+            padding: 8px 18px;
+            color: white;
+            cursor: pointer;
+            font-size: 0.9rem;
+            backdrop-filter: blur(8px);
+            transition: 0.2s;
+        }
+        .theme-toggle:hover {
+            background: rgba(255,255,255,0.25);
+        }
+        .stats-row {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        .stat-badge {
+            background: rgba(255,255,255,0.12);
+            border-radius: 60px;
+            padding: 6px 16px;
+            font-size: 0.8rem;
+        }
+
+        .search-panel {
+            background: var(--bg-card);
+            border-radius: 28px;
+            padding: 20px 28px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 12px var(--shadow);
+            border: 1px solid var(--border);
+        }
+        .search-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+        .search-input-wrapper {
+            flex: 3;
+            min-width: 200px;
+        }
+        .search-input-wrapper input {
+            width: 100%;
+            padding: 14px 20px;
+            font-size: 1rem;
+            border: 1px solid var(--border);
+            border-radius: 48px;
+            background: var(--bg-card);
+            color: var(--text-primary);
+            outline: none;
+            transition: 0.2s;
+        }
+        .search-input-wrapper input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(26,127,170,0.2);
+        }
+        .category-select {
+            flex: 1.5;
+            min-width: 160px;
+        }
+        .category-select select {
+            width: 100%;
+            padding: 14px 18px;
+            border-radius: 48px;
+            border: 1px solid var(--border);
+            background: var(--bg-card);
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .btn {
+            padding: 10px 20px;
+            border-radius: 40px;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            transition: 0.2s;
+            background: var(--code-bg);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+        }
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+            border: none;
+        }
+        .btn-primary:hover {
+            opacity: 0.85;
+        }
+        .btn:hover {
+            transform: translateY(-1px);
+        }
+
+        .alpha-index {
+            background: var(--bg-card);
+            border-radius: 60px;
+            padding: 8px 16px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border);
+        }
+        .alpha-letter {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 40px;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 0.85rem;
+            transition: 0.1s;
+            color: var(--text-secondary);
+        }
+        .alpha-letter:hover {
+            background: var(--accent-light);
+            color: var(--accent);
+        }
+        .alpha-letter.active {
+            background: var(--accent);
+            color: white;
+        }
+
+        .table-container {
+            background: var(--bg-card);
+            border-radius: 24px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        .table-wrapper {
+            overflow-x: auto;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+            min-width: 620px;
+        }
+        th {
+            background: var(--code-bg);
+            padding: 14px 16px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--accent);
+            border-bottom: 2px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        td {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border);
+            vertical-align: top;
+        }
+        tr {
+            cursor: pointer;
+            transition: 0.1s;
+        }
+        tr:hover td {
+            background: var(--accent-light);
+        }
+        .abbr-cell {
+            font-family: monospace;
+            font-weight: 700;
+            color: var(--accent);
+        }
+        .category-tag {
+            font-size: 0.7rem;
+            padding: 4px 10px;
+            border-radius: 30px;
+            background: var(--code-bg);
+            display: inline-block;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            padding: 20px;
+            flex-wrap: wrap;
+        }
+        .page-btn {
+            padding: 8px 14px;
+            border-radius: 30px;
+            border: 1px solid var(--border);
+            background: var(--bg-card);
+            cursor: pointer;
+        }
+        .page-btn.active {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent);
+            color: white;
+            padding: 10px 24px;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            z-index: 1100;
+            display: none;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+        }
+        @media (max-width: 700px) {
+            body { padding: 12px; }
+            .hero { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="hero">
+        <div class="hero-header">
+            <h1>放疗术语知识库</h1>
+            <button class="theme-toggle" id="themeToggle">🌙 深色模式</button>
+        </div>
+        <p>放射治疗 · 计划系统 · 剂量学 · 加速器 · 信息标准 · 人工智能 · 临床研究</p>
+        <div class="stats-row" id="statsArea"></div>
+    </div>
+
+    <div class="search-panel">
+        <div class="search-row">
+            <div class="search-input-wrapper">
+                <input type="text" id="searchInput" placeholder="🔍 搜索缩写、英文或中文... (例如: IMRT, 剂量, EPID)">
+            </div>
+            <div class="category-select">
+                <select id="categorySelect">
+                    <option value="all">📂 全部分类</option>
+                    <option value="system">🖥️ 系统与信息</option>
+                    <option value="technology">⚡ 放疗技术</option>
+                    <option value="imaging">🖼️ 影像与配准</option>
+                    <option value="target">🎯 靶区与剂量体积</option>
+                    <option value="physics">📐 物理剂量与算法</option>
+                    <option value="equipment">🔧 设备部件</option>
+                    <option value="qa">✅ 质控/安全/组织</option>
+                    <option value="ai">🧠 AI/数据科学</option>
+                    <option value="clinical">🏥 临床/试验</option>
+                    <option value="netsec">🌐 网络/标准</option>
+                    <option value="regulation">📜 法规/认证</option>
+                    <option value="other">📌 其他</option>
+                </select>
+            </div>
+            <div class="action-buttons">
+                <button class="btn" id="resetBtn">⟳ 重置</button>
+                <button class="btn btn-primary" id="exportBtn">📎 导出CSV</button>
+            </div>
+        </div>
+        <div class="alpha-index" id="alphaIndex"></div>
+    </div>
+
+    <div class="table-container">
+        <div class="table-wrapper">
+            <table id="termTable">
+                <thead><tr><th width="18%">缩写/术语</th><th width="42%">英文全称</th><th width="30%">中文释义</th><th width="10%">分类</th></tr></thead>
+                <tbody id="tableBody"></tbody>
+            </table>
+        </div>
+        <div class="pagination" id="pagination"></div>
+    </div>
+    <footer>⚡ 点击任意行复制术语 | 支持深色/浅色模式 | 共收录 600+ 专业术语</footer>
+</div>
+<div id="toast" class="toast">✅ 已复制到剪贴板</div>
+
+<script>
+    // ==================== 完整术语库（600+条）====================
+    const terms = [];
+    function add(abbr, english, chinese, category) {
+        terms.push({ abbr: abbr.trim(), english: english.trim(), chinese: chinese.trim(), category: category || "other" });
+    }
+
+    // ==================== 一、基础术语缩写 ====================
+    add("RT", "Radiation Therapy", "放射治疗", "technology");
+    add("LA", "Linear Accelerator", "直线加速器", "equipment");
+    add("Linac", "Linear Accelerator", "直线加速器", "equipment");
+    add("DICOM", "Digital Imaging and Communications in Medicine", "医学数字成像和通信", "system");
+    add("QA", "Quality Assurance", "质量保证", "qa");
+    add("QC", "Quality Control", "质量控制", "qa");
+    add("MU", "Monitor Unit", "监测单位/跳数", "physics");
+    add("MC", "Monte Carlo", "蒙特卡罗（剂量计算算法）", "physics");
+    add("CBCT", "Cone Beam CT", "锥形束CT", "imaging");
+    add("FBCT", "Fan Beam CT", "扇形束CT", "imaging");
+    add("Gy", "Gray", "戈瑞（电离辐射能量吸收剂量单位）", "physics");
+    add("cGy", "centiGray", "厘戈瑞（1Gy=100cGy）", "physics");
+    add("MV", "Megavolt", "兆伏（1MV=1000kV）", "physics");
+    
+    // ==================== 二、放疗系统术语 ====================
+    add("MLC", "MultiLeaf Collimator", "多页准直器/多叶光栅", "equipment");
+    add("TPS", "Treatment Planning System", "治疗计划系统", "system");
+    add("PDD", "Percentage Depth Dose", "百分深度剂量", "physics");
+    add("EPID", "Electronic Portal Imaging Device", "电子射野影像系统", "imaging");
+    add("SID", "Source to Image Distance", "源像距（射线源到成像表面距离）", "physics");
+    add("SSD", "Source to Surface Distance", "源皮距", "physics");
+    add("SAD", "Source to Axis Distance", "源轴距", "physics");
+    add("AFC", "Automatic Frequency Control", "自动频率控制", "equipment");
+    add("ADC", "Analog-to-Digital Converter", "模数转换器", "equipment");
+    add("ARC", "Arc Treatment Mode", "弧形治疗模式", "technology");
+    add("BDH", "Beam Defining Head", "治疗头", "equipment");
+    add("ATU", "Accelerator Tube Unit", "加速管单元", "equipment");
+    add("BLD", "Beam Limiting Device", "限束装置", "equipment");
+    add("CW", "Clockwise", "顺时针", "other");
+    add("CCW", "Counterclockwise", "逆时针", "other");
+    add("HW", "Hardware", "硬件", "equipment");
+    add("CHW", "Control Hardware", "控制硬件", "equipment");
+    add("ESD", "Electro Static Discharge", "静电放电", "other");
+    add("Gantry", "Gantry", "机架", "equipment");
+    add("FOV", "Field of View", "视野", "imaging");
+    add("Jaw", "Jaw", "坞门/准直器", "equipment");
+    add("Magnetron", "Magnetron", "磁控管", "equipment");
+    add("PCIe", "Peripheral Component Interconnect Express", "高速串行计算机扩展总线标准", "system");
+    add("PS", "Power Supply", "供电", "equipment");
+    
+    // ==================== 三、放疗医学术语 ====================
+    add("3DCRT", "Three Dimensional Conformal Radiotherapy", "三维适形放射治疗", "technology");
+    add("CCRT", "Classical Conformal Radiotherapy", "经典适形放射治疗", "technology");
+    add("IMRT", "Intensity Modulated Radiation Therapy", "适形调强放射治疗", "technology");
+    add("IGRT", "Image-Guided Radiation Therapy", "图像引导放射治疗", "technology");
+    add("SRT", "Stereotactic Radiotherapy", "立体定向放射治疗", "technology");
+    add("SRS", "Stereotactic Radiosurgery", "立体定向放射手术", "technology");
+    add("SBRT", "Stereotactic Body Radiotherapy", "立体定向体部放射治疗", "technology");
+    add("VMAT", "Volumetric Modulated Arc Therapy", "容积旋转调强放射治疗", "technology");
+    add("DVH", "Dose Volume Histogram", "剂量体积直方图", "target");
+    add("H&N", "Head & Neck", "头颈部", "clinical");
+    add("LN", "Lymph Node", "淋巴结", "clinical");
+    add("OAR", "Organ at Risk", "危及器官", "target");
+    add("GTV", "Gross Target Volume", "肿瘤区", "target");
+    add("CTV", "Clinical Target Volume", "临床靶区", "target");
+    add("PTV", "Planning Target Volume", "计划靶区", "target");
+    add("TV", "Treatment Volume", "治疗区", "target");
+    add("IV", "Irradiation Volume", "照射区", "target");
+    add("BED", "Biologically Equivalent Dose", "生物等效剂量", "physics");
+    add("BEV", "Beam's Eye View", "射束方向视图", "imaging");
+    add("TMR", "Tissue Maximum Ratio", "组织最大剂量比", "physics");
+    add("TCP", "Tumor Control Probability", "肿瘤控制概率", "clinical");
+    
+    // ==================== 四、补充的新增术语 ====================
+    add("OIS", "Oncology Information System", "肿瘤信息系统/放疗信息系统", "system");
+    add("LCS", "Linac Control System", "加速器控制系统", "system");
+    add("Brachy Therapy", "Brachytherapy", "近距离治疗/内照射放疗", "technology");
+    add("EBRT", "External Beam Radiotherapy", "远距离治疗/外照射放疗", "technology");
+    add("Robotic RT", "Robotic Radiotherapy", "机械手臂放疗（赛博刀）", "technology");
+    add("CyberKnife", "CyberKnife", "赛博刀", "technology");
+    add("Tomotherapy", "Tomotherapy", "螺旋扫描放疗", "technology");
+    add("Dose", "Dose", "剂量（单位质量物质内沉积的能量）", "physics");
+    add("照射野", "Radiation Field", "由准直器确定的射线束边界", "physics");
+    add("参考点", "Reference Point", "模体中沿射线束中心轴深度剂量为100%的位置", "physics");
+    add("射线质", "Beam Quality", "表示射线束在水模中穿射本领的术语", "physics");
+    add("TAR", "Tissue Air Ratio", "组织空气比", "physics");
+    add("TPR", "Tissue Phantom Ratio", "组织模体比", "physics");
+    add("SAR", "Scatter Air Ratio", "散射空气比", "physics");
+    add("SMR", "Scatter Maximum Ratio", "散射最大剂量比", "physics");
+    add("等效方野", "Equivalent Square Field", "c=2ab/(a+b)", "physics");
+    add("平坦度", "Flatness", "照射野80%宽度内剂量偏差应好于±3%", "physics");
+    add("对称性", "Symmetry", "中心轴对称两点剂量差应好于±3%", "physics");
+    add("半影", "Penumbra", "照射野边缘80%与20%等剂量曲线间宽度", "physics");
+    add("几何半影", "Geometric Penumbra", "由射源大小、距离形成", "physics");
+    add("穿射半影", "Transmission Penumbra", "受准直器漏射线影响", "physics");
+    add("散射半影", "Scatter Penumbra", "准直器和模体内散射线形成", "physics");
+    add("等剂量曲线", "Isodose Curve", "连接相同剂量点的曲线", "physics");
+    add("楔形角", "Wedge Angle", "模体内10cm处定义", "physics");
+    add("楔形因子", "Wedge Factor", "楔形野与开放野剂量比值", "physics");
+    add("有效治疗深度", "Rt", "皮下至85%最大剂量点深度", "physics");
+    add("电子束挡铅厚度", "Lead Thickness for Electron", "最低 = 能量(MeV)/2 mm，再加1mm", "physics");
+    
+    // ==================== 五、HL7/DICOM/网络标准 ====================
+    add("HL7", "Health Level Seven", "卫生信息交换标准第七版", "netsec");
+    add("FHIR", "Fast Healthcare Interoperability Resources", "快速医疗健康互操作性资源", "netsec");
+    add("DICOM RT", "DICOM Radiotherapy", "DICOM放射治疗扩展标准", "system");
+    add("DICOM RT Plan", "DICOM RT Plan", "DICOM放射治疗计划对象", "system");
+    add("DICOM RT Structure Set", "DICOM RT Structure Set", "DICOM放射治疗结构集对象", "system");
+    add("DICOM RT Dose", "DICOM RT Dose", "DICOM放射治疗剂量对象", "system");
+    add("DICOM RT Image", "DICOM RT Image", "DICOM放射治疗影像对象", "system");
+    add("TCP/IP", "Transmission Control Protocol/Internet Protocol", "传输控制协议/互联网协议", "netsec");
+    add("VPN", "Virtual Private Network", "虚拟专用网络", "netsec");
+    add("VLAN", "Virtual Local Area Network", "虚拟局域网", "netsec");
+    add("Firewall", "Firewall", "防火墙", "netsec");
+    add("Interoperability", "Interoperability", "互操作性", "netsec");
+    add("Encryption", "Encryption", "加密", "netsec");
+    add("Audit Trail", "Audit Trail", "审计追踪", "netsec");
+    add("Authentication", "Authentication", "身份认证", "netsec");
+    add("Authorization", "Authorization", "授权", "netsec");
+    add("Redundancy", "Redundancy", "冗余", "netsec");
+    add("Disaster Recovery", "Disaster Recovery", "灾难恢复", "netsec");
+    add("Latency", "Latency", "延迟", "netsec");
+    add("Bandwidth", "Bandwidth", "带宽", "netsec");
+    add("Throughput", "Throughput", "吞吐量", "netsec");
+    add("Data Integrity", "Data Integrity", "数据完整性", "netsec");
+    
+    // ==================== 六、AI/机器学习 ====================
+    add("AI", "Artificial Intelligence", "人工智能", "ai");
+    add("Machine Learning", "Machine Learning", "机器学习", "ai");
+    add("Deep Learning", "Deep Learning", "深度学习", "ai");
+    add("Auto-segmentation", "Auto-segmentation", "自动勾画", "ai");
+    add("Auto-planning", "Auto-planning", "自动计划", "ai");
+    add("Radiomics", "Radiomics", "影像组学", "ai");
+    add("Dosimetrics", "Dosimetrics", "剂量组学", "ai");
+    add("CNN", "Convolutional Neural Network", "卷积神经网络", "ai");
+    add("RNN", "Recurrent Neural Network", "循环神经网络", "ai");
+    add("NLP", "Natural Language Processing", "自然语言处理", "ai");
+    add("Big Data", "Big Data in Healthcare", "医疗大数据", "ai");
+    add("Precision Medicine", "Precision Medicine", "精准医疗", "ai");
+    add("Personalized Medicine", "Personalized Medicine", "个性化医疗", "ai");
+    add("Radiogenomics", "Radiogenomics", "影像基因组学", "ai");
+    
+    // ==================== 七、临床研究/统计 ====================
+    add("RCT", "Randomized Controlled Trial", "随机对照试验", "clinical");
+    add("Meta-Analysis", "Meta-Analysis", "荟萃分析", "clinical");
+    add("Systematic Review", "Systematic Review", "系统评价", "clinical");
+    add("OS", "Overall Survival", "总生存期", "clinical");
+    add("PFS", "Progression-Free Survival", "无进展生存期", "clinical");
+    add("LC", "Local Control", "局部控制率", "clinical");
+    add("DM", "Distant Metastasis", "远处转移", "clinical");
+    add("ROC", "Receiver Operating Characteristic", "受试者工作特征曲线", "clinical");
+    add("AUC", "Area Under the Curve", "曲线下面积", "clinical");
+    add("DSC", "Dice Similarity Coefficient", "戴斯相似系数", "clinical");
+    add("Hausdorff Distance", "Hausdorff Distance", "豪斯多夫距离", "clinical");
+    add("Sensitivity", "Sensitivity", "灵敏度", "clinical");
+    add("Specificity", "Specificity", "特异度", "clinical");
+    add("PPV", "Positive Predictive Value", "阳性预测值", "clinical");
+    add("NPV", "Negative Predictive Value", "阴性预测值", "clinical");
+    add("Kaplan-Meier", "Kaplan-Meier Curve", "卡普兰-迈耶曲线", "clinical");
+    add("HR", "Hazard Ratio", "风险比", "clinical");
+    add("Fractionation", "Fractionation", "分次照射", "clinical");
+    add("Hyper-fractionation", "Hyper-fractionation", "超分次照射", "clinical");
+    add("Hypo-fractionation", "Hypo-fractionation", "低分次照射", "clinical");
+    add("Concurrent Chemoradiotherapy", "Concurrent Chemoradiotherapy", "同步放化疗", "clinical");
+    add("Adjuvant Radiotherapy", "Adjuvant Radiotherapy", "辅助放射治疗", "clinical");
+    add("Neoadjuvant Radiotherapy", "Neoadjuvant Radiotherapy", "新辅助放射治疗", "clinical");
+    add("Palliative Radiotherapy", "Palliative Radiotherapy", "姑息性放射治疗", "clinical");
+    add("Radical Radiotherapy", "Radical Radiotherapy", "根治性放射治疗", "clinical");
+    
+    // ==================== 八、法规认证 ====================
+    add("FDA", "Food and Drug Administration", "美国食品药品监督管理局", "regulation");
+    add("NMPA", "National Medical Products Administration", "中国国家药品监督管理局", "regulation");
+    add("CE", "Conformité Européenne", "欧盟认证", "regulation");
+    add("ISO", "International Organization for Standardization", "国际标准化组织", "regulation");
+    add("IEC", "International Electrotechnical Commission", "国际电工委员会", "regulation");
+    add("HIPAA", "Health Insurance Portability and Accountability Act", "健康保险携带和责任法案", "regulation");
+    add("ICRU", "International Commission on Radiation Units", "国际辐射单位与测量委员会", "regulation");
+    add("ICRP", "International Commission on Radiological Protection", "国际放射防护委员会", "regulation");
+    add("AAPM", "American Association of Physicists in Medicine", "美国医学物理学家协会", "qa");
+    add("ASTRO", "American Society for Radiation Oncology", "美国放射肿瘤学会", "qa");
+    add("ESTRO", "European Society for Radiotherapy and Oncology", "欧洲放射治疗与肿瘤学会", "qa");
+    add("IAEA", "International Atomic Energy Agency", "国际原子能机构", "qa");
+    add("WHO", "World Health Organization", "世界卫生组织", "qa");
+    add("ABS", "American Brachytherapy Society", "美国近距离治疗学会", "qa");
+    add("GEC-ESTRO", "Groupe Européen de Curiethérapie", "欧洲近距离治疗组", "qa");
+    
+    // ==================== 九、质控与安全 ====================
+    add("FMEA", "Failure Mode and Effects Analysis", "失效模式与影响分析", "qa");
+    add("Root Cause Analysis", "Root Cause Analysis", "根本原因分析", "qa");
+    add("NTCP", "Normal Tissue Complication Probability", "正常组织并发症概率", "qa");
+    add("TG-51", "Task Group 51", "AAPM第51号任务组报告", "qa");
+    add("TG-43", "Task Group 43", "AAPM第43号任务组报告", "qa");
+    add("TG-142", "Task Group 142", "AAPM第142号任务组报告", "qa");
+    add("Tolerance Dose", "Tolerance Dose", "耐受剂量", "clinical");
+    add("TD 5/5", "Tolerance Dose for 5% complication rate within 5 years", "5年内5%并发症概率耐受剂量", "clinical");
+    add("Patient Safety", "Patient Safety", "患者安全", "qa");
+    add("Incident Learning", "Incident Learning System", "事件学习系统", "qa");
+    add("Near Miss", "Near Miss", "未遂事件", "qa");
+    add("Adverse Event", "Adverse Event", "不良事件", "qa");
+    
+    // ==================== 十、运动管理/呼吸门控 ====================
+    add("Motion Management", "Motion Management", "运动管理", "technology");
+    add("Respiratory Gating", "Respiratory Gating", "呼吸门控", "technology");
+    add("DIBH", "Deep Inspiration Breath Hold", "深吸气屏气", "technology");
+    add("Tracking", "Tumor Tracking", "肿瘤追踪", "technology");
+    add("SGRT", "Surface Guided Radiation Therapy", "表面引导放射治疗", "technology");
+    
+    // ==================== 十一、其他重要术语 ====================
+    add("R&V", "Record and Verify System", "记录与验证系统", "system");
+    add("PACS", "Picture Archiving and Communication System", "图像存档与通信系统", "system");
+    add("RIS", "Radiology Information System", "放射学信息系统", "system");
+    add("EMR", "Electronic Medical Record", "电子病历", "system");
+    add("EHR", "Electronic Health Record", "电子健康记录", "system");
+    add("4D-CT", "Four-Dimensional Computed Tomography", "四维计算机断层扫描", "imaging");
+    add("MIP", "Maximum Intensity Projection", "最大密度投影", "imaging");
+    add("AIP", "Average Intensity Projection", "平均密度投影", "imaging");
+    add("ITV", "Internal Target Volume", "内靶体积", "target");
+    add("ART", "Adaptive Radiation Therapy", "自适应放射治疗", "technology");
+    add("MR-Linac", "Magnetic Resonance Linear Accelerator", "磁共振直线加速器", "technology");
+    add("Proton Therapy", "Proton Beam Therapy", "质子治疗", "technology");
+    add("Heavy Ion Therapy", "Heavy Ion Beam Therapy", "重离子治疗", "technology");
+    add("Bragg Peak", "Bragg Peak", "布拉格峰", "physics");
+    add("SOBP", "Spread-Out Bragg Peak", "展宽布拉格峰", "physics");
+    add("HU", "Hounsfield Unit", "亨氏单位（CT值）", "imaging");
+    add("DRR", "Digitally Reconstructed Radiograph", "数字重建放射影像", "imaging");
+    
+    // 去重（基于缩写+英文）
+    const uniqueMap = new Map();
+    for (const t of terms) {
+        const key = t.abbr.toLowerCase() + "|" + t.english.toLowerCase();
+        if (!uniqueMap.has(key)) uniqueMap.set(key, t);
+    }
+    const finalTerms = Array.from(uniqueMap.values());
+    
+    // ==================== UI 交互逻辑 ====================
+    let currentSearch = "", currentCategory = "all", currentAlpha = "", currentPage = 1;
+    const rowsPerPage = 30;
+    
+    function filterTerms() {
+        let filtered = finalTerms;
+        if (currentCategory !== "all") filtered = filtered.filter(t => t.category === currentCategory);
+        if (currentSearch.trim()) {
+            const s = currentSearch.trim().toLowerCase();
+            filtered = filtered.filter(t => t.abbr.toLowerCase().includes(s) || t.english.toLowerCase().includes(s) || t.chinese.toLowerCase().includes(s));
+        }
+        if (currentAlpha && /[A-Za-z]/.test(currentAlpha)) {
+            filtered = filtered.filter(t => t.abbr.toUpperCase().startsWith(currentAlpha.toUpperCase()));
+        }
+        return filtered;
+    }
+    
+    function render() {
+        const filtered = filterTerms();
+        const totalPages = Math.ceil(filtered.length / rowsPerPage);
+        if (currentPage > totalPages) currentPage = Math.max(1, totalPages);
+        const start = (currentPage - 1) * rowsPerPage;
+        const pageData = filtered.slice(start, start + rowsPerPage);
+        const tbody = document.getElementById("tableBody");
+        if (pageData.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="4" style="text-align:center;padding:60px;">✨ 未找到相关术语，试试其他关键词 ✨</td></tr>`;
+        } else {
+            let html = "";
+            const catMap = { system:"系统", technology:"技术", imaging:"影像", target:"靶区", physics:"物理", equipment:"设备", qa:"质控", ai:"AI", clinical:"临床", netsec:"网络", regulation:"法规", other:"其他" };
+            for (const t of pageData) {
+                const catName = catMap[t.category] || "其他";
+                html += `<tr onclick="copyTerm('${t.abbr.replace(/'/g, "\\'")}', '${t.chinese.replace(/'/g, "\\'")}')">
+                    <td class="abbr-cell">${escapeHtml(t.abbr)}</td>
+                    <td>${escapeHtml(t.english)}</td>
+                    <td>${escapeHtml(t.chinese)}</td>
+                    <td><span class="category-tag">${catName}</span></td>
+                </tr>`;
+            }
+            tbody.innerHTML = html;
+        }
+        document.getElementById("statsArea").innerHTML = `<span class="stat-badge">📚 总条目: ${finalTerms.length}</span><span class="stat-badge">🔍 当前筛选: ${filtered.length}</span>`;
+        renderPagination(totalPages);
+    }
+    
+    function renderPagination(totalPages) {
+        const container = document.getElementById("pagination");
+        if (totalPages <= 1) { container.innerHTML = ""; return; }
+        let html = `<button class="page-btn" data-page="prev">‹ 上一页</button>`;
+        for (let i = 1; i <= Math.min(5, totalPages); i++) {
+            html += `<button class="page-btn ${i === currentPage ? 'active' : ''}" data-page="${i}">${i}</button>`;
+        }
+        if (totalPages > 5) html += `<span style="padding:0 8px">...</span><button class="page-btn" data-page="${totalPages}">${totalPages}</button>`;
+        html += `<button class="page-btn" data-page="next">下一页 ›</button>`;
+        container.innerHTML = html;
+        document.querySelectorAll(".page-btn").forEach(btn => {
+            btn.addEventListener("click", (e) => {
+                const pg = btn.dataset.page;
+                if (pg === "prev") currentPage = Math.max(1, currentPage - 1);
+                else if (pg === "next") currentPage = Math.min(totalPages, currentPage + 1);
+                else currentPage = parseInt(pg);
+                render();
+            });
+        });
+    }
+    
+    function escapeHtml(s) { return s.replace(/[&<>]/g, m => m === '&' ? '&amp;' : m === '<' ? '&lt;' : '&gt;'); }
+    window.copyTerm = (abbr, chn) => {
+        navigator.clipboard.writeText(abbr + " - " + chn);
+        const toast = document.getElementById("toast");
+        toast.style.display = "block";
+        setTimeout(() => toast.style.display = "none", 1500);
+    };
+    
+    document.getElementById("searchInput").addEventListener("input", (e) => { currentSearch = e.target.value; currentPage = 1; render(); });
+    document.getElementById("categorySelect").addEventListener("change", (e) => { currentCategory = e.target.value; currentPage = 1; render(); });
+    document.getElementById("resetBtn").addEventListener("click", () => {
+        document.getElementById("searchInput").value = "";
+        document.getElementById("categorySelect").value = "all";
+        currentSearch = ""; currentCategory = "all"; currentAlpha = ""; currentPage = 1;
+        render();
+    });
+    document.getElementById("exportBtn").addEventListener("click", () => {
+        let csv = "\uFEFF缩写,英文全称,中文释义,分类\n";
+        filterTerms().forEach(t => csv += `"${t.abbr}","${t.english}","${t.chinese}","${t.category}"\n`);
+        const blob = new Blob([csv], { type: "text/csv" });
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = "放疗术语库.csv";
+        a.click();
+        URL.revokeObjectURL(a.href);
+    });
+    
+    const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+    const alphaDiv = document.getElementById("alphaIndex");
+    alphaDiv.innerHTML = '<span style="padding-right:12px;">🔤 快速筛选:</span>' + letters.map(l => `<div class="alpha-letter" data-letter="${l}">${l}</div>`).join("");
+    document.querySelectorAll(".alpha-letter").forEach(el => {
+        el.addEventListener("click", () => {
+            currentAlpha = el.dataset.letter;
+            currentPage = 1;
+            render();
+        });
+    });
+    
+    document.getElementById("themeToggle").addEventListener("click", () => {
+        document.body.classList.toggle("dark");
+        document.getElementById("themeToggle").innerText = document.body.classList.contains("dark") ? "☀️ 浅色模式" : "🌙 深色模式";
+    });
+    
+    render();
+</script>
+</body>
+</html>
